@@ -21,7 +21,9 @@ class UserRepository {
 
   signin = async (userData) => {
     try {
-      const user = await userModel.findOne({ email: userData.email });
+      const user = await userModel
+        .findOne({ email: userData.email })
+        .select("+password");
       const isUserValid = await bcrypt.compare(
         userData.password,
         user.password
@@ -41,6 +43,17 @@ class UserRepository {
         { expiresIn: "1h" }
       );
       return token;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getUserData = async (id) => {
+    try {
+      const user = await userModel.findById(id);
+      if (!user) throw new Error(`User with id: ${id} not found`);
+      // check if the requested user id and the fetched user id are same. (To prevent users from fetching other users data)
+      return user;
     } catch (error) {
       throw error;
     }

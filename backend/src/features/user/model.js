@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema(
         /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%&*_\-/.]).{8,}$/,
         "password should contain min of 8 characters and at least one upper case one lower case one integer and one special character.",
       ],
+      select: false,
     },
   },
   {

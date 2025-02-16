@@ -18,7 +18,7 @@ class UserController {
         userCreated,
       });
     } catch (error) {
-      console.error(`Failed to signup: ${error}`);
+      console.log(`Failed to signup: ${error}`);
       next(error);
     }
   };
@@ -32,6 +32,17 @@ class UserController {
         .json({ success: true, message: "user signed in successfully", token });
     } catch (error) {
       console.log(`Failed to signin: ${error}`);
+      next(error);
+    }
+  };
+
+  getUser = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const user = await userRepository.getUserData(id);
+      res.status(200).json({ success: true, user });
+    } catch (error) {
+      console.log(`Failed to fetch user data: ${error}`);
       next(error);
     }
   };
