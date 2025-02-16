@@ -1,10 +1,6 @@
 import userRepository from "./repository.js";
 
 class UserController {
-  constructor() {
-    this.repository = userRepository;
-  }
-
   signup = async (req, res, next) => {
     try {
       const { userName, email, password } = req.body;
@@ -15,7 +11,7 @@ class UserController {
         password,
       };
 
-      const userCreated = await this.repository.signup(newUser);
+      const userCreated = await userRepository.signup(newUser);
       res.status(201).json({
         success: true,
         message: "User Signed Up Successfully",
@@ -23,6 +19,19 @@ class UserController {
       });
     } catch (error) {
       console.error(`Failed to signup: ${error}`);
+      next(error);
+    }
+  };
+
+  signin = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      const token = await userRepository.signin({ email, password });
+      res
+        .status(200)
+        .json({ success: true, message: "user signed in successfully", token });
+    } catch (error) {
+      console.log(`Failed to signin: ${error}`);
       next(error);
     }
   };
