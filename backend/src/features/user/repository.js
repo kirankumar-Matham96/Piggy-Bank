@@ -52,7 +52,6 @@ class UserRepository {
     try {
       const user = await userModel.findById(id);
       if (!user) throw new Error(`User with id: ${id} not found`);
-      // check if the requested user id and the fetched user id are same. (To prevent users from fetching other users data)
       return user;
     } catch (error) {
       throw error;

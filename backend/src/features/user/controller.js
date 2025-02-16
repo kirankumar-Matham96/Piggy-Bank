@@ -38,7 +38,7 @@ class UserController {
 
   getUser = async (req, res, next) => {
     try {
-      const { id } = req.params;
+      const id = req.userId;
       const user = await userRepository.getUserData(id);
       res.status(200).json({ success: true, user });
     } catch (error) {
