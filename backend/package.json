@@ -9,7 +9,8 @@
     "start": "node server.js",
     "test": "",
     "build": "",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "keywords": [
     "Banking",

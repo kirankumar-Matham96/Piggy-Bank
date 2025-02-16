@@ -1,1 +1,1 @@
-pnpm test
+npx husky add .husky/pre-commit "pnpm run lint"
