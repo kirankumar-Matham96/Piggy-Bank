@@ -6,8 +6,6 @@ class UserController {
   }
 
   signup = async (req, res, next) => {
-    console.log("🚀 ~ UserController ~ signup");
-
     try {
       const { userName, email, password } = req.body;
 
@@ -18,14 +16,13 @@ class UserController {
       };
 
       const userCreated = await this.repository.signup(newUser);
-      console.log("🚀 ~ UserController ~ signup= ~ userCreated:", userCreated);
       res.status(201).json({
         success: true,
         message: "User Signed Up Successfully",
         userCreated,
       });
     } catch (error) {
-      console.log(`Failed to signup: ${error}`);
+      console.error(`Failed to signup: ${error}`);
       next(error);
     }
   };

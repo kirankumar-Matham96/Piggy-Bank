@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getHashedPassword } from "../../util/encryptPassword.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -23,13 +24,22 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      match: [/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%&*_\-/.]).{8,}$/,"password should contain min of 8 characters and at least one upper case one lower case one integer and one special character."],
+      match: [
+        /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%&*_\-/.]).{8,}$/,
+        "password should contain min of 8 characters and at least one upper case one lower case one integer and one special character.",
+      ],
     },
   },
   {
     versionKey: false,
     timestamps: true,
   }
-);
+).pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  const hashedPassword = await getHashedPassword(this.password);
+  this.password = hashedPassword;
+  next();
+});
 
 export const userModel = mongoose.model("users", UserSchema);
