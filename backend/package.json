@@ -8,9 +8,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "test": "",
-    "build": "",
-    "prepare": "husky",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "build": ""
   },
   "keywords": [
     "Banking",
@@ -37,20 +35,6 @@
     "mongoose": "^8.10.1"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
     "nodemon": "^3.1.9"
-  },
-  "eslintConfig": {
-    "rules": {
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ]
-    }
   }
 }
