@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import CORS from "cors";
+import cookieParser from "cookie-parser";
 import { connectToDB } from "./src/config/mongodb.config.js";
 import { userRouter } from "./src/features/user/routes.js";
 
@@ -9,7 +10,13 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(CORS());
+app.use(cookieParser());
+app.use(
+  CORS({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.status(200).send("welcome to Piggy Bank!");

@@ -12,6 +12,10 @@ userRouter.post("/signin", (req, res, next) =>
   userController.signin(req, res, next)
 );
 
+userRouter.get("/signout", (req, res, next) =>
+  userController.signout(req, res, next)
+);
+
 userRouter.get("/", auth, (req, res, next) =>
   userController.getUser(req, res, next)
 );

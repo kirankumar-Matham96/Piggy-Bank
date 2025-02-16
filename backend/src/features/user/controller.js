@@ -27,11 +27,34 @@ class UserController {
     try {
       const { email, password } = req.body;
       const token = await userRepository.signin({ email, password });
-      res
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+      });
+
+      return res
         .status(200)
-        .json({ success: true, message: "user signed in successfully", token });
+        .json({ success: true, message: "user signed in successfully" });
     } catch (error) {
       console.log(`Failed to signin: ${error}`);
+      next(error);
+    }
+  };
+
+  signout = (req, res, next) => {
+    try {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+      });
+
+      res
+        .status(200)
+        .json({ success: true, message: "User signed out successfully" });
+    } catch (error) {
       next(error);
     }
   };
