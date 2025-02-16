@@ -1,9 +1,0 @@
-#!/bin/sh
-pnpm exec eslint .
-
-
-# #!/bin/sh
-
-# cd backend && pnpm exec eslint .
-# cd ../frontend && pnpm exec eslint .
-
